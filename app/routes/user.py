@@ -56,3 +56,25 @@ async def search_user(token: str):
                     result_data.append(user_data)
     encrypted_token = encrypt_data({'data': result_data})
     return {'data': encrypted_token}
+
+
+@user_router.get("/users/user_details/friend_list/")
+async def friend_list(token: str):
+    """Returns the friend list of the user"""
+    data = decrypt_token(token)
+    email = data.get('email')
+
+    if email is None:
+        return {'status': 'error', 'reason': 'email missing'}
+
+    user = User.nodes.get(email=email)
+    user_friend_list = user.get_friend_list()
+    if len(user_friend_list) > 0:
+        user_friend_list = user_friend_list[0]
+
+    user_friend_list = [{'email': user.email, 'name': f'{user.first_name} {user.last_name}'}
+                        for user in user_friend_list]
+
+    token = encrypt_data({'data': user_friend_list})
+
+    return {'status': 'success', 'token': token}
