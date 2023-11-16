@@ -70,10 +70,8 @@ async def friend_list(token: str):
     user = User.nodes.get(email=email)
     user_friend_list = user.get_friend_list()
     if len(user_friend_list) > 0:
-        user_friend_list = user_friend_list[0]
-
-    user_friend_list = [{'email': user.email, 'name': f'{user.first_name} {user.last_name}'}
-                        for user in user_friend_list]
+        user_friend_list = [{'email': user[0].email, 'name': f'{user[0].first_name} {user[0].last_name}'}
+                            for user in user_friend_list]
 
     token = encrypt_data({'data': user_friend_list})
 

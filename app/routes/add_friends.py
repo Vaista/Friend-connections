@@ -73,9 +73,9 @@ async def received_friend_requests(token: str):
     received_requests = user.get_received_friend_requests()
     try:
         received_requests = [{
-            'email': req.email,
-            'name': f'{req.first_name} {req.last_name}'
-        } for req in received_requests[0]]
+            'email': req[0].email,
+            'name': f'{req[0].first_name} {req[0].last_name}'
+        } for req in received_requests]
     except:
         received_requests = []
 
@@ -98,9 +98,9 @@ async def sent_friend_requests(token: str):
     sent_requests = user.get_sent_friend_requests()
     try:
         sent_requests = [{
-            'email': req.email,
-            'name': f'{req.first_name} {req.last_name}'
-        } for req in sent_requests[0]]
+            'email': req[0].email,
+            'name': f'{req[0].first_name} {req[0].last_name}'
+        } for req in sent_requests]
     except:
         sent_requests = []
 
