@@ -284,3 +284,4 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+/cli_commands.py
